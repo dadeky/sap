@@ -18,8 +18,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": ">=5.5",
-    "besimple/soap-client": "^v0.2.6"
+    "php": ">=5.5"
   },
   "autoload": {
     "psr-4": {

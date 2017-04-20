@@ -5,5 +5,5 @@ interface RequestInterface
 {
 	public function getMethodName();
 	
-	public function toSapParams();
+	public function getSapParams();
 }
