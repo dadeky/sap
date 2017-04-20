@@ -22,8 +22,7 @@ class SoapAdapter implements AdapterInterface
 	 */
 	public function getResponse($methodName, array $arguments) 
 	{
-		$result = $this->client->__soapCall($methodName, $arguments);
-		
+		return $this->client->$methodName($arguments);
 	}
 
 }
