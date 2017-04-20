@@ -1,18 +1,21 @@
 <?php
 namespace Sap\Infrastructure;
 
+use BeSimple\SoapClient\SoapClient;
+
 class SoapAdapter implements AdapterInterface
 {
-	/** @var \SoapClient */
+	/** @var SoapClient */
 	private $client;
 	public function __construct(
 			$wsdl, $login, $password, $soapVersion
 	){
-		$this->client = new \SoapClient($wsdl, 
+		$this->client = new SoapClient($wsdl, 
 		[
 			'login'=>$login,
 			'password'=>$password,
-			'soap_version'=>$soapVersion
+			'soap_version'=>$soapVersion,
+			'cache_wsdl' => WSDL_CACHE_DISK
 		]);
 	}
 	
