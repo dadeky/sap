@@ -1,0 +1,34 @@
+{
+  "name": "dadeky/sap",
+  "description": "Library for SAP handling.",
+  "authors": [
+    {
+      "name": "Darko Dvorski",
+      "email": "dadeky@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "homepage": "https://github.com/dadeky/sap",
+  "license": "BSD-2-Clause",
+  "keywords": [
+    "sap",
+    "soap"
+  ],
+  "config": {
+    "sort-packages": true
+  },
+  "require": {
+    "php": ">=5.5",
+    "besimple/soap-client": "^v0.2.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sap\\": "src/Sap"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Sap\\Tests\\": "tests/Sap/Tests"
+    }
+  }
+}
