@@ -1,7 +1,7 @@
 <?php
 namespace Sap\Domain;
 
-interface RequestInterface 
+interface RemoteRequestInterface 
 {
 	public function getMethodName();
 	

@@ -1,10 +1,10 @@
 <?php
 namespace Sap\Infrastructure;
 
-use Sap\Domain\ServiceInterface;
-use Sap\Domain\RequestInterface;
+use Sap\Domain\RemoteServiceInterface;
+use Sap\Domain\RemoteRequestInterface;
 
-class SapService implements ServiceInterface
+class SapService implements RemoteServiceInterface
 {
 	/** @var AdapterInterface */
 	private $adapter;
@@ -18,7 +18,7 @@ class SapService implements ServiceInterface
 	 * {@inheritDoc}
 	 * @see \Sap\Domain\ServiceInterface::execute()
 	 */
-	public function execute(RequestInterface $request) 
+	public function execute(RemoteRequestInterface $request) 
 	{
 		return $this->adapter->getResponse($request->getMethodName(), $request->getSapParams());
 	}
