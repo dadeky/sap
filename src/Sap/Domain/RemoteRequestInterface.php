@@ -5,5 +5,5 @@ interface RemoteRequestInterface
 {
 	public function getMethodName();
 	
-	public function getSapParams();
+	public function getParams();
 }
