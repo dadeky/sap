@@ -5,6 +5,8 @@ use Sap\Domain\ErrorMessage;
 
 interface RemoteResponseInterface
 {
+    public function __construct(\stdClass $rawResponse);
+    
     /**
      * @return ErrorMessage[]
      */
