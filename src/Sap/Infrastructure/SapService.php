@@ -15,8 +15,9 @@ class SapService implements RemoteServiceInterface
 	}
 	
 	/**
+	 * 
 	 * {@inheritDoc}
-	 * @see \Sap\Domain\ServiceInterface::execute()
+	 * @see \Sap\Domain\RemoteServiceInterface::execute()
 	 */
 	public function execute(RemoteRequestInterface $request) 
 	{

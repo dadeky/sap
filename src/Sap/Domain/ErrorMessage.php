@@ -1,7 +1,7 @@
 <?php
 namespace Sap\Domain;
 
-class Message 
+class ErrorMessage 
 {
 	private $type;
 	private $number;

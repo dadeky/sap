@@ -1,11 +1,13 @@
 <?php
 namespace Sap\Domain;
 
+use src\Sap\Domain\RemoteResponseInterface;
+
 interface RemoteServiceInterface 
 {
 	/**
-	 * 
-	 * @param SapRequestInterface $request
+	 * @param RemoteRequestInterface $request
+	 * @return RemoteResponseInterface
 	 */
 	public function execute(RemoteRequestInterface $request);
 }
