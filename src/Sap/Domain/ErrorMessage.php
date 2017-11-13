@@ -12,15 +12,20 @@ class ErrorMessage
 	private $parameter4;
 	private $messageText;
 	
+	const ERR_TYPE_ERROR   = 'E';
+	const ERR_TYPE_WARNING = 'W';
+	const ERR_TYPE_ABORT   = 'A';
+	const ERR_TYPE_INFO    = 'I';
+	
 	public function __construct(
-			 $type,
-			 $number,
-			 $id,
-			 $parameter1,
-			 $parameter2,
-			 $parameter3,
-			 $parameter4,
-			 $messageText
+		 $type,
+		 $number,
+		 $id,
+		 $parameter1,
+		 $parameter2,
+		 $parameter3,
+		 $parameter4,
+		 $messageText
 	){
 		$this->type = $type;
 		$this->number = $number;
@@ -55,6 +60,23 @@ class ErrorMessage
 	}
 	public function getMessageText() {
 		return $this->messageText;
+	}
+	
+	
+	public function isError() {
+	    return ($this->getType() == SELF::ERR_TYPE_ERROR);
+	}
+	
+	public function isWarning() {
+	    return ($this->getType() == SELF::ERR_TYPE_WARNING);
+	}
+	
+	public function isInfo() {
+	    return ($this->getType() == SELF::ERR_TYPE_INFO);
+	}
+	
+	public function isAbort() {
+	    return ($this->getType() == SELF::ERR_TYPE_ABORT);
 	}
 	
 }

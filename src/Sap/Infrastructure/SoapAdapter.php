@@ -12,10 +12,10 @@ class SoapAdapter implements AdapterInterface
 	){
 		$this->client = new SoapClient($wsdl, 
 		[
-			'login'=>$login,
-			'password'=>$password,
-			'soap_version'=>$soapVersion,
-			'cache_wsdl' => WSDL_CACHE_DISK
+			'login'          => $login,
+			'password'       => $password,
+			'soap_version'   => $soapVersion,
+			'cache_wsdl'     => WSDL_CACHE_DISK
 		]);
 	}
 	
