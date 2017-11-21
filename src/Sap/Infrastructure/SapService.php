@@ -19,9 +19,9 @@ class SapService implements RemoteServiceInterface
 	 * {@inheritDoc}
 	 * @see \Sap\Domain\RemoteServiceInterface::execute()
 	 */
-	public function execute(RemoteRequestInterface $request, $responseClass) 
+	public function execute(RemoteRequestInterface $request, $responseClassName) 
 	{
-	    return new $responseClass ( $this->adapter->getResponse($request->getMethodName(), $request->getParams()) );
+	    return new $responseClassName ( $this->adapter->getResponse($request->getMethodName(), $request->getParams()) );
 	}
 
 }

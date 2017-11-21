@@ -7,8 +7,8 @@ interface RemoteServiceInterface
 {
 	/**
 	 * @param RemoteRequestInterface $request
-	 * @param class $responseClass
+	 * @param string $responseClassName FQCN of a class
 	 * @return RemoteResponseInterface
 	 */
-    public function execute(RemoteRequestInterface $request, $responseClass);
+    public function execute(RemoteRequestInterface $request, $responseClassName);
 }
