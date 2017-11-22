@@ -6,7 +6,8 @@ use BeSimple\SoapClient\SoapClient;
 class SoapAdapter implements AdapterInterface
 {
 	/** @var SoapClient */
-	private $client;
+	private $client;
+
 	public function __construct(
 			$wsdl, $login, $password, $soapVersion
 	){
@@ -25,7 +26,19 @@ class SoapAdapter implements AdapterInterface
 	 */
 	public function getResponse($methodName, array $arguments) 
 	{
-		return $this->client->$methodName($arguments);
+		return $this->client->$methodName($this->prepareArguments($arguments));
 	}
 
+	/**
+	 * If the arg is null change to ''
+	 * @param array $arguments
+	 */
+	private function prepareArguments(array $arguments)
+	{
+	    foreach ($arguments as &$argValue)
+	    {
+	        $argValue = null === $argValue ? '' : $argValue;
+	    }
+	    return $arguments;
+	}
 }

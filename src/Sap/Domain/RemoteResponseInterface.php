@@ -1,15 +1,22 @@
 <?php
-namespace src\Sap\Domain;
-
-use Sap\Domain\ErrorMessage;
+namespace Sap\Domain;
 
 interface RemoteResponseInterface
 {
-    public function __construct(\stdClass $rawResponse);
+    /**
+     * @param \stdClass $rawResponse
+     */
+    public function processRawResponse(\stdClass $rawResponse);
     
     /**
      * @return ErrorMessage[]
      */
     public function getErrorMessages();
+    
+    /**
+     * 
+     * @param ErrorMessage[] $errorMessages
+     */
+    public function setErrorMessages(array $errorMessages);
 }
 

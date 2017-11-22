@@ -19,7 +19,8 @@
   },
   "require": {
     "php": ">=5.5",
-    "besimple/soap-client": "^0.2.6"
+    "besimple/soap-client": "^0.2.6",
+    "dadeky/ddd": "^1.0"
   },
   "autoload": {
     "psr-4": {
