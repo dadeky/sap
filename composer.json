@@ -20,6 +20,8 @@
   "require": {
     "php": ">=5.5",
     "besimple/soap-client": "^0.2.6",
+    "guzzlehttp/guzzle" : "~6.0",
+    "dadeky/file" : "^1.0",
     "dadeky/ddd": "^1.0"
   },
   "autoload": {
