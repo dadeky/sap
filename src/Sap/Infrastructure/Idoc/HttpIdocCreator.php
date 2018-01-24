@@ -6,6 +6,7 @@ use Sap\Domain\Idoc\AbstractIdocCreator;
 use Sap\Domain\Idoc\IdocCreatorParameters;
 use Sap\Domain\Idoc\Exception\NoInterfaceNameParameterIsSetException;
 use Sap\Domain\Idoc\Exception\NoQosParameterIsSetException;
+use Sap\Domain\Idoc\Exception\NoInterfaceNamespaceParameterIsSetException;
 
 class HttpIdocCreator extends AbstractIdocCreator
 {
@@ -47,6 +48,9 @@ class HttpIdocCreator extends AbstractIdocCreator
         
         if (null === $this->idocCreatorParameters->getQos())
             throw new NoQosParameterIsSetException();
+        
+        if (null === $this->idocCreatorParameters->getInterfaceNamespace())
+            throw new NoInterfaceNamespaceParameterIsSetException();
         
         $this->client->post(
             $this->uri,
