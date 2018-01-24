@@ -11,6 +11,10 @@ abstract class AbstractIdocCreator
     
     abstract public function createIdoc($idocContent);
     abstract public function getType();
+    /**
+     * @param IdocCreatorParameters $idocCreatorParameters
+     * @return self
+     */
     abstract public function setParameters(IdocCreatorParameters $idocCreatorParameters);
 }
 
