@@ -9,4 +9,6 @@ interface RemoteRequestInterface
 	
 	public function isSapOnline();
 	
+	public static function getSequenceName();
+	
 }
