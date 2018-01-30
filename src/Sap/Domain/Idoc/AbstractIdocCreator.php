@@ -9,7 +9,7 @@ abstract class AbstractIdocCreator
     /** @var IdocCreatorParameters */
     protected $idocCreatorParameters;
     
-    abstract public function createIdoc($idocContent);
+    abstract public function createIdoc($idocContent, $fileName=null);
     abstract public function getType();
     /**
      * @param IdocCreatorParameters $idocCreatorParameters
