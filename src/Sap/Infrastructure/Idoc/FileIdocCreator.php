@@ -12,15 +12,18 @@ class FileIdocCreator extends AbstractIdocCreator
     
     private $creatorService;
     
-    public function createIdoc($idocContent)
+    public function createIdoc($idocContent, $fileName=null)
     {
         if (null === $this->idocCreatorParameters->getPath())
             throw new NoPathParameterIsSetException();
         
         $this->creatorService = new CreatorService($this->idocCreatorParameters->getPath());
         
+        if (null === $fileName)
+            $fileName = (new \DateTime())->format('Ymd-his-u');
+        
         $this->creatorService->createFile(
-            (new \DateTime())->format('Ymd-his-u'),
+            $fileName,
             $idocContent);
     }
     
