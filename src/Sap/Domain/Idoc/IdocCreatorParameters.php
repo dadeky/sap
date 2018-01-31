@@ -7,16 +7,23 @@ class IdocCreatorParameters
     private $interfaceName;
     private $qos;
     private $interfaceNamespace;
+    private $queueid;
     
     public function __construct(
-        $path=null, $interfaceName=null, $qos=null, $interfaceNamespace=null
+        $path=null, $interfaceName=null, $qos=null, $interfaceNamespace=null, $queueid=null
     ){
         $this->interfaceName = $interfaceName;
         $this->path = $path;
         $this->qos = $qos;
         $this->interfaceNamespace = $interfaceNamespace;
+        $this->queueid = $queueid;
     }
     
+    public function getQueueid()
+    {
+        return $this->queueid;
+    }
+
     public function getInterfaceNamespace()
     {
         return $this->interfaceNamespace;

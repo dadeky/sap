@@ -63,7 +63,8 @@ class HttpIdocCreator extends AbstractIdocCreator
                     'senderService' => $this->senderServiceName,
                     'interfaceNamespace' => $this->idocCreatorParameters->getInterfaceNamespace(),
                     'interface' => $this->idocCreatorParameters->getInterfaceName(),
-                    'qos' => $this->idocCreatorParameters->getQos()
+                    'qos' => $this->idocCreatorParameters->getQos(),
+                    'queueid' => $this->idocCreatorParameters->getQos()
                 ]
             ]);
     }
