@@ -37,27 +37,27 @@ class SapService implements RemoteServiceInterface
             foreach ($rawResponse->ErrorList as $errItem)
             {
                 // abort or error should be thrown
-                if ( (string)$errItem->Msgty == ErrorMessage::ERR_TYPE_ERROR || (string)$errItem->Msgty == ErrorMessage::ERR_TYPE_ABORT )
+                if ( (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ERROR || (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ABORT )
                     throw new SoapException(
-                        (string)$errItem->Message,
-                        (string)$errItem->Msgno,
-                        (string)$errItem->Msgv1,
-                        (string)$errItem->Msgv2,
-                        (string)$errItem->Msgv3,
-                        (string)$errItem->Msgv4,
-                        (string)$errItem->Msgty,
-                        (string)$errItem->Msgid);
+                        (string)$errItem->MESSAGE,
+                        (string)$errItem->MSGNO,
+                        (string)$errItem->MSGV1,
+                        (string)$errItem->MSGV2,
+                        (string)$errItem->MSGV3,
+                        (string)$errItem->MSGV4,
+                        (string)$errItem->MSGTY,
+                        (string)$errItem->MSGID);
                     
                     // info or warning should be set in the response object for later
                     $errorMessages[] = new ErrorMessage(
-                        (string)$errItem->Msgty,
-                        (string)$errItem->Msgno,
-                        (string)$errItem->Msgid,
-                        (string)$errItem->Msgv1,
-                        (string)$errItem->Msgv2,
-                        (string)$errItem->Msgv3,
-                        (string)$errItem->Msgv4,
-                        (string)$errItem->Message);
+                        (string)$errItem->MSGTY,
+                        (string)$errItem->MSGNO,
+                        (string)$errItem->MSGID,
+                        (string)$errItem->MSGV1,
+                        (string)$errItem->MSGV2,
+                        (string)$errItem->MSGV3,
+                        (string)$errItem->MSGV4,
+                        (string)$errItem->MESSAGE);
             }
             $response->setErrorMessages($errorMessages);
         }
