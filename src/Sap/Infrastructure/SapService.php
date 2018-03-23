@@ -13,7 +13,7 @@ class SapService implements RemoteServiceInterface
 	private $adapter;
 
 	public function __construct(
-			AdapterInterface $adapter
+        AdapterInterface $adapter
 	){
 		$this->adapter = $adapter;
 	}
@@ -37,27 +37,33 @@ class SapService implements RemoteServiceInterface
             foreach ($rawResponse->ErrorList as $errItem)
             {
                 // abort or error should be thrown
-                if ( (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ERROR || (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ABORT )
+                if ( 
+                    (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ERROR || (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ABORT ||
+                    (string)$errItem->Msgty == ErrorMessage::ERR_TYPE_ERROR || (string)$errItem->Msgty == ErrorMessage::ERR_TYPE_ABORT
+                ) {
                     throw new SoapException(
-                        (string)$errItem->MESSAGE,
-                        (string)$errItem->MSGNO,
-                        (string)$errItem->MSGV1,
-                        (string)$errItem->MSGV2,
-                        (string)$errItem->MSGV3,
-                        (string)$errItem->MSGV4,
-                        (string)$errItem->MSGTY,
-                        (string)$errItem->MSGID);
-                    
-                    // info or warning should be set in the response object for later
-                    $errorMessages[] = new ErrorMessage(
-                        (string)$errItem->MSGTY,
-                        (string)$errItem->MSGNO,
-                        (string)$errItem->MSGID,
-                        (string)$errItem->MSGV1,
-                        (string)$errItem->MSGV2,
-                        (string)$errItem->MSGV3,
-                        (string)$errItem->MSGV4,
-                        (string)$errItem->MESSAGE);
+                        $errItem->Message ? (string)$errItem->Message : (string)$errItem->MESSAGE,
+                        $errItem->Msgno ? (string)$errItem->Msgno : (string)$errItem->MSGNO,
+                        $errItem->Msgv1 ? (string)$errItem->Msgv1 : (string)$errItem->MSGV1,
+                        $errItem->Msgv2 ? (string)$errItem->Msgv2 : (string)$errItem->MSGV2,
+                        $errItem->Msgv3 ? (string)$errItem->Msgv3 : (string)$errItem->MSGV3,
+                        $errItem->Msgv4 ? (string)$errItem->Msgv4 : (string)$errItem->MSGV4,
+                        $errItem->Msgty ? (string)$errItem->Msgty : (string)$errItem->MSGTY,
+                        $errItem->Msgid ? (string)$errItem->Msgid : (string)$errItem->MSGID
+                    );			
+		}
+				
+		// info or warning should be set in the response object for later
+		$errorMessages[] = new ErrorMessage(
+		    $errItem->Msgty ? (string)$errItem->Msgty : (string)$errItem->MSGTY,
+		    $errItem->Msgno ? (string)$errItem->Msgno : (string)$errItem->MSGNO,
+		    $errItem->Msgid ? (string)$errItem->Msgid : (string)$errItem->MSGID,
+		    $errItem->Msgv1 ? (string)$errItem->Msgv1 : (string)$errItem->MSGV1,
+		    $errItem->Msgv2 ? (string)$errItem->Msgv2 : (string)$errItem->MSGV2,
+		    $errItem->Msgv3 ? (string)$errItem->Msgv3 : (string)$errItem->MSGV3,
+		    $errItem->Msgv4 ? (string)$errItem->Msgv4 : (string)$errItem->MSGV4,
+		    $errItem->Message ? (string)$errItem->Message : (string)$errItem->MESSAGE
+                );
             }
             $response->setErrorMessages($errorMessages);
         }
