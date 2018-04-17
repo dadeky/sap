@@ -6,6 +6,8 @@ use Sap\Domain\RemoteRequestInterface;
 use Sap\Domain\RemoteResponseInterface;
 use Sap\Infrastructure\Exception\SoapException;
 use Sap\Domain\ErrorMessage;
+use Sap\Domain\Exception\Constants;
+use Sap\Infrastructure\Exception\BatchNumberNotUniqueException;
 
 class SapService implements RemoteServiceInterface
 {
@@ -40,7 +42,14 @@ class SapService implements RemoteServiceInterface
                 if ( 
                     (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ERROR || (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ABORT ||
                     (string)$errItem->Msgty == ErrorMessage::ERR_TYPE_ERROR || (string)$errItem->Msgty == ErrorMessage::ERR_TYPE_ABORT
-                ) {
+                ){
+                    if (
+                        (string)$errItem->Msgno == Constants::BATCH_NUMBER_NOT_UNIQUE || 
+                        (string)$errItem->MSGNO == Constants::BATCH_NUMBER_NOT_UNIQUE
+                    ){
+                        throw new BatchNumberNotUniqueException( $errItem->Msgv1 ? (string)$errItem->Msgv1 : (string)$errItem->MSGV1 );
+                    }
+                    
                     throw new SoapException(
                         $errItem->Message ? (string)$errItem->Message : (string)$errItem->MESSAGE,
                         $errItem->Msgno ? (string)$errItem->Msgno : (string)$errItem->MSGNO,
@@ -51,19 +60,18 @@ class SapService implements RemoteServiceInterface
                         $errItem->Msgty ? (string)$errItem->Msgty : (string)$errItem->MSGTY,
                         $errItem->Msgid ? (string)$errItem->Msgid : (string)$errItem->MSGID
                     );			
-		}
+                }
 				
-		// info or warning should be set in the response object for later
-		$errorMessages[] = new ErrorMessage(
-		    $errItem->Msgty ? (string)$errItem->Msgty : (string)$errItem->MSGTY,
-		    $errItem->Msgno ? (string)$errItem->Msgno : (string)$errItem->MSGNO,
-		    $errItem->Msgid ? (string)$errItem->Msgid : (string)$errItem->MSGID,
-		    $errItem->Msgv1 ? (string)$errItem->Msgv1 : (string)$errItem->MSGV1,
-		    $errItem->Msgv2 ? (string)$errItem->Msgv2 : (string)$errItem->MSGV2,
-		    $errItem->Msgv3 ? (string)$errItem->Msgv3 : (string)$errItem->MSGV3,
-		    $errItem->Msgv4 ? (string)$errItem->Msgv4 : (string)$errItem->MSGV4,
-		    $errItem->Message ? (string)$errItem->Message : (string)$errItem->MESSAGE
-                );
+        		// info or warning should be set in the response object for later
+        		$errorMessages[] = new ErrorMessage(
+        		    $errItem->Msgty ? (string)$errItem->Msgty : (string)$errItem->MSGTY,
+        		    $errItem->Msgno ? (string)$errItem->Msgno : (string)$errItem->MSGNO,
+        		    $errItem->Msgid ? (string)$errItem->Msgid : (string)$errItem->MSGID,
+        		    $errItem->Msgv1 ? (string)$errItem->Msgv1 : (string)$errItem->MSGV1,
+        		    $errItem->Msgv2 ? (string)$errItem->Msgv2 : (string)$errItem->MSGV2,
+        		    $errItem->Msgv3 ? (string)$errItem->Msgv3 : (string)$errItem->MSGV3,
+        		    $errItem->Msgv4 ? (string)$errItem->Msgv4 : (string)$errItem->MSGV4,
+        		    $errItem->Message ? (string)$errItem->Message : (string)$errItem->MESSAGE);
             }
             $response->setErrorMessages($errorMessages);
         }
