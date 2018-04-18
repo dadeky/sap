@@ -38,40 +38,27 @@ class SapService implements RemoteServiceInterface
             $errorMessages = [];
             foreach ($rawResponse->ErrorList as $errItem)
             {
+                $Msgty = property_exists($errItem, "Msgty") ? $errItem->Msgty : $errItem->MSGTY;
+                $Message = property_exists($errItem, "Message") ? $errItem->Message : $errItem->MESSAGE;
+                $Msgno = property_exists($errItem, "Msgno") ? $errItem->Msgno : $errItem->MSGNO;
+                $Msgv1 = property_exists($errItem, "Msgv1") ? $errItem->Msgv1 : $errItem->MSGV1;
+                $Msgv2 = property_exists($errItem, "Msgv2") ? $errItem->Msgv2 : $errItem->MSGV2;
+                $Msgv3 = property_exists($errItem, "Msgv3") ? $errItem->Msgv3 : $errItem->MSGV3;
+                $Msgv4 = property_exists($errItem, "Msgv4") ? $errItem->Msgv4 : $errItem->MSGV4;
+                $Msgid = property_exists($errItem, "Msgid") ? $errItem->Msgid : $errItem->MSGID;
+                
                 // abort or error should be thrown
-                if ( 
-                    (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ERROR || (string)$errItem->MSGTY == ErrorMessage::ERR_TYPE_ABORT ||
-                    (string)$errItem->Msgty == ErrorMessage::ERR_TYPE_ERROR || (string)$errItem->Msgty == ErrorMessage::ERR_TYPE_ABORT
-                ){
-                    if (
-                        (string)$errItem->Msgno == Constants::BATCH_NUMBER_NOT_UNIQUE || 
-                        (string)$errItem->MSGNO == Constants::BATCH_NUMBER_NOT_UNIQUE
-                    ){
-                        throw new BatchNumberNotUniqueException( $errItem->Msgv1 ? (string)$errItem->Msgv1 : (string)$errItem->MSGV1 );
+                if ( $Msgty == ErrorMessage::ERR_TYPE_ERROR || $Msgty == ErrorMessage::ERR_TYPE_ABORT ){
+                    // if batch is not unique
+                    if ( $Msgno == Constants::BATCH_NUMBER_NOT_UNIQUE ){
+                        throw new BatchNumberNotUniqueException( $Msgv1 );
                     }
                     
-                    throw new SoapException(
-                        $errItem->Message ? (string)$errItem->Message : (string)$errItem->MESSAGE,
-                        $errItem->Msgno ? (string)$errItem->Msgno : (string)$errItem->MSGNO,
-                        $errItem->Msgv1 ? (string)$errItem->Msgv1 : (string)$errItem->MSGV1,
-                        $errItem->Msgv2 ? (string)$errItem->Msgv2 : (string)$errItem->MSGV2,
-                        $errItem->Msgv3 ? (string)$errItem->Msgv3 : (string)$errItem->MSGV3,
-                        $errItem->Msgv4 ? (string)$errItem->Msgv4 : (string)$errItem->MSGV4,
-                        $errItem->Msgty ? (string)$errItem->Msgty : (string)$errItem->MSGTY,
-                        $errItem->Msgid ? (string)$errItem->Msgid : (string)$errItem->MSGID
-                    );			
+                    throw new SoapException( $Message, $Msgno, $Msgv1, $Msgv2, $Msgv3, $Msgv4, $Msgid );			
                 }
 				
         		// info or warning should be set in the response object for later
-        		$errorMessages[] = new ErrorMessage(
-        		    $errItem->Msgty ? (string)$errItem->Msgty : (string)$errItem->MSGTY,
-        		    $errItem->Msgno ? (string)$errItem->Msgno : (string)$errItem->MSGNO,
-        		    $errItem->Msgid ? (string)$errItem->Msgid : (string)$errItem->MSGID,
-        		    $errItem->Msgv1 ? (string)$errItem->Msgv1 : (string)$errItem->MSGV1,
-        		    $errItem->Msgv2 ? (string)$errItem->Msgv2 : (string)$errItem->MSGV2,
-        		    $errItem->Msgv3 ? (string)$errItem->Msgv3 : (string)$errItem->MSGV3,
-        		    $errItem->Msgv4 ? (string)$errItem->Msgv4 : (string)$errItem->MSGV4,
-        		    $errItem->Message ? (string)$errItem->Message : (string)$errItem->MESSAGE);
+                $errorMessages[] = new ErrorMessage( $Msgty, $Msgno, $Msgid, $Msgv1, $Msgv2, $Msgv3, $Msgv4, $Message );
             }
             $response->setErrorMessages($errorMessages);
         }
