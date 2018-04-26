@@ -52,6 +52,17 @@ class HttpIdocCreator extends AbstractIdocCreator
         if (null === $this->idocCreatorParameters->getInterfaceNamespace())
             throw new NoInterfaceNamespaceParameterIsSetException();
         
+        $query = [
+            'senderService' => $this->senderServiceName,
+            'interfaceNamespace' => $this->idocCreatorParameters->getInterfaceNamespace(),
+            'interface' => $this->idocCreatorParameters->getInterfaceName(),
+            'qos' => $this->idocCreatorParameters->getQos(),
+            'queueid' => $this->idocCreatorParameters->getQueueid()
+        ];
+        
+        if (null !== $this->idocCreatorParameters->getUuid())
+            $query['msgguid'] = $this->idocCreatorParameters->getUuid();
+        
         $this->client->post(
             $this->uri,
             [
@@ -59,14 +70,7 @@ class HttpIdocCreator extends AbstractIdocCreator
                 'headers'  => [
                     'Content-Type' => 'text/xml',
                 ],
-                'query' => [
-                    'senderService' => $this->senderServiceName,
-                    'interfaceNamespace' => $this->idocCreatorParameters->getInterfaceNamespace(),
-                    'interface' => $this->idocCreatorParameters->getInterfaceName(),
-                    'qos' => $this->idocCreatorParameters->getQos(),
-                    'queueid' => $this->idocCreatorParameters->getQueueid(),
-                    'msgguid' => $this->idocCreatorParameters->getUuid()
-                ]
+                'query' => $query
             ]);
     }
     
