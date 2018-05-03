@@ -60,7 +60,7 @@ class HttpIdocCreator extends AbstractIdocCreator
             'queueid' => $this->idocCreatorParameters->getQueueid()
         ];
         
-        if (null !== $this->idocCreatorParameters->getUuid())
+        if (!empty($this->idocCreatorParameters->getUuid()))
             $query['msgguid'] = $this->idocCreatorParameters->getUuid();
         
         $this->client->post(
