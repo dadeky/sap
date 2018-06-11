@@ -10,7 +10,7 @@ trait IdocCreatingTrait
      * @param string $serviceType
      * @return AbstractIdocCreator|NULL
      */
-    private function getIdocService($serviceType)
+    protected function getIdocService($serviceType)
     {
         foreach ($this->createIdocServices as $service)
         {
