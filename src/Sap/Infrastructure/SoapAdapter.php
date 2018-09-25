@@ -7,17 +7,24 @@ class SoapAdapter implements AdapterInterface
 {
 	/** @var SoapClient */
 	private $client;
+	
+	/** @var string */
+	private $error;
 
 	public function __construct(
 			$wsdl, $login, $password, $soapVersion
-	){
-		$this->client = new SoapClient($wsdl, 
-		[
-			'login'          => $login,
-			'password'       => $password,
-			'soap_version'   => $soapVersion,
-			'cache_wsdl'     => WSDL_CACHE_DISK
-		]);
+	){	    
+	    try{
+    		$this->client = new SoapClient($wsdl, 
+    		[
+    			'login'          => $login,
+    			'password'       => $password,
+    			'soap_version'   => $soapVersion,
+    			'cache_wsdl'     => WSDL_CACHE_DISK
+    		]);
+	    } catch (\Exception $e) {
+	        $this->error = $e->getMessage();
+	    }
 	}
 	
 	/**
@@ -26,7 +33,7 @@ class SoapAdapter implements AdapterInterface
 	 */
 	public function getResponse($methodName, array $arguments) 
 	{
-		return $this->client->$methodName($this->prepareArguments($arguments));
+	    return empty($this->error) ? $this->client->$methodName($this->prepareArguments($arguments)) : new \stdClass();
 	}
 
 	/**
