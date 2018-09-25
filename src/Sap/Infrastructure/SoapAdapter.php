@@ -9,15 +9,17 @@ class SoapAdapter implements AdapterInterface
 	private $client;
 
 	public function __construct(
-			$wsdl, $login, $password, $soapVersion
+			$wsdl, $login, $password, $soapVersion, $sapOnline
 	){
-		$this->client = new SoapClient($wsdl, 
-		[
-			'login'          => $login,
-			'password'       => $password,
-			'soap_version'   => $soapVersion,
-			'cache_wsdl'     => WSDL_CACHE_DISK
-		]);
+	    if($sapOnline){
+    		$this->client = new SoapClient($wsdl, 
+    		[
+    			'login'          => $login,
+    			'password'       => $password,
+    			'soap_version'   => $soapVersion,
+    			'cache_wsdl'     => WSDL_CACHE_DISK
+    		]);
+	   }
 	}
 	
 	/**
