@@ -12,7 +12,11 @@ class SoapAdapter implements AdapterInterface
 	private $error;
 
 	public function __construct(
-			$wsdl, $login, $password, $soapVersion
+		$wsdl,
+		$login,
+		$password,
+		$soapVersion,
+		$connTimeout = 60
 	){	    
 	    try{
     		$this->client = new SoapClient($wsdl, 
@@ -20,7 +24,8 @@ class SoapAdapter implements AdapterInterface
     			'login'          => $login,
     			'password'       => $password,
     			'soap_version'   => $soapVersion,
-    			'cache_wsdl'     => WSDL_CACHE_DISK
+    			'cache_wsdl'     => WSDL_CACHE_DISK,
+			'connection_timeout' => $connTimeout,
     		]);
 	    } catch (\Exception $e) {
 	        $this->error = $e->getMessage();
