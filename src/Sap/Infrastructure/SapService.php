@@ -33,7 +33,7 @@ class SapService implements RemoteServiceInterface
 	        throw new SoapException($ex->getMessage());
 	    }
 	    
-        if (isset($rawResponse->ErrorList->item) && count($rawResponse->ErrorList->item) > 0)
+	    if (isset($rawResponse->ErrorList->item) && count(get_object_vars($rawResponse->ErrorList->item)) > 0)
         {
             $errorMessages = [];
             foreach ($rawResponse->ErrorList as $errItem)
